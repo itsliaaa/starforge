@@ -64,7 +64,7 @@ const client = new WaClient({
 extendSocket(client)
 
 client.on('auth_qr', async ({ qr }) => {
-   const { ascii } = awair encodeQR(qr)
+   const { ascii } = await encodeQR(qr)
    console.log('📷 Scan this QR', ascii)
 })
 
@@ -128,7 +128,7 @@ The following example shows the serialized message payload.
   message: e {
     extendedTextMessage: e {
       endCardTiles: [],
-      text: 'A',
+      text: '@itsliaaa/starforge',
       previewType: 0,
       contextInfo: [e],
       inviteLinkGroupTypeV2: 0
@@ -152,7 +152,7 @@ The following example shows the serialized message payload.
   type: 'extendedTextMessage',
   msg: e {
     endCardTiles: [],
-    text: 'A',
+    text: '@itsliaaa/starforge',
     previewType: 0,
     contextInfo: e {
       mentionedJid: [],
@@ -168,7 +168,7 @@ The following example shows the serialized message payload.
     inviteLinkGroupTypeV2: 0
   },
   quoted: {
-    text: 'A',
+    text: '@itsliaaa/starforge',
     id: 'ACC4C76F644FF8ECD0193D87E2380367',
     chat: '120111111111111111@g.us',
     sender: '6281111111111@s.whatsapp.net',
@@ -186,7 +186,7 @@ The following example shows the serialized message payload.
   },
   expiration: 604800,
   mentionedJid: [],
-  text: 'A',
+  text: '@itsliaaa/starforge',
   reply: [Function: replyMessage],
   react: [Function: reactMessage]
 }

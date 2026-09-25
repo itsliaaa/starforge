@@ -5,7 +5,7 @@
    "main": "./lib/index.js",
    "exports": {
       ".": {
-         "import": "./lib/index.js",
+         "import": "./lib/index.mjs",
          "require": "./lib/index.js"
       }
    },
@@ -39,18 +39,23 @@
    "author": "Lia Wynn",
    "license": "Apache-2.0",
    "peerDependencies": {
-      "magic-bytes.js": "^1.12",
-      "qr": "^0.6",
-      "sharp": ">=0.33.3"
+      "@napi-rs/image": "^1.12.0",
+      "jimp": "^1.6.0",
+      "magic-bytes.js": "^1.12.1",
+      "qr": ">=0.5.0",
+      "sharp": ">=0.33.0"
    },
    "peerDependenciesMeta": {
+      "@napi-rs/image": {
+         "optional": true
+      },
+      "jimp": {
+         "optional": true
+      },
       "magic-bytes.js": {
          "optional": true
       },
       "qr": {
-         "optional": true
-      },
-      "sharp": {
          "optional": true
       }
    },
