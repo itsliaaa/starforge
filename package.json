@@ -1,7 +1,7 @@
 {
    "name": "@itsliaaa/starforge",
-   "version": "0.0.0-alpha.0",
-   "description": "A toolkit for building WhatsApp bots with Baileys and Zapo.",
+   "version": "0.0.0-alpha.1",
+   "description": "A toolkit for building WhatsApp bots with Zapo.",
    "main": "./lib/index.js",
    "exports": {
       ".": {
@@ -27,13 +27,17 @@
    "keywords": [
       "whatsapp",
       "whatsapp-bot",
-      "baileys",
       "zapo",
       "toolkit",
       "automation",
       "media",
       "sticker",
-      "watcher"
+      "watcher",
+      "cache",
+      "zip",
+      "html",
+      "mutex",
+      "queue"
    ],
    "homepage": "https://github.com/itsliaaa/starforge#readme",
    "author": "Lia Wynn",
@@ -50,12 +54,6 @@
          "optional": true
       },
       "jimp": {
-         "optional": true
-      },
-      "magic-bytes.js": {
-         "optional": true
-      },
-      "qr": {
          "optional": true
       }
    },
