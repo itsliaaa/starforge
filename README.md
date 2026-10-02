@@ -50,6 +50,7 @@
     - [🔘 Legacy Button](#-legacy-button)
     - [📋 Legacy List](#-legacy-list)
     - [✨ Rich](#-rich)
+    - [↩️ Copy & Forward](#%EF%B8%8F-copy--forward)
     - [🧰 Additional Options](#-additional-options)
   - [👤 Chats](#-chats)
     - [rejectCall](#rejectcallcallid-string-callcreatorjid-string)
@@ -240,6 +241,11 @@ The following example shows the serialized message payload.
 ```javascript
 client.sendText(jid, 'Hello 👋🏻', m)
 
+// Send as view once
+client.sendText(jid, 'Hello 👋🏻', m, {
+   viewOnce: true
+})
+
 // Send as a group status with a custom font color, background color, and font style
 client.sendText(jid, 'Hello 👋🏻', m, {
    // RGB: 230, 230, 250
@@ -289,13 +295,15 @@ client.sendAdText(jid, 'Link Preview 🌱', m, {
 ```javascript
 client.sendMedia(jid, 'https://files.catbox.moe/jtofzb.jpeg', '🍂', m)
 
-// Force the media type
 client.sendMedia(jid, 'https://files.catbox.moe/jtofzb.jpeg', '🍂', m, {
+  // Force the media type
   document: true,
   audio: false,
   ptt: false,
   ptv: false,
   gifPlayback: false,
+
+  // Additional payload
   fileName: 'Nature.jpeg',
   mimetype: 'image/jpeg'
 })
@@ -329,7 +337,7 @@ client.sendSticker(jid, 'https://files.catbox.moe/jtofzb.jpeg', m, {
 
 #### 👤 Contact
 
-`sendContact(jid: string, contacts?: object[], quote?: object, options?: object)`
+`sendContact(jid: string, contacts: object[], quote?: object, options?: object)`
 
 ```javascript
 client.sendContact(jid, [{
@@ -339,7 +347,7 @@ client.sendContact(jid, [{
   website: 'https://example.com',
   location: 'New York, USA',
   other: '',
-  number: '+1 555 123 4567'
+  number: '15551234567'
 }], m)
 
 // You can also send multiple contacts at once
@@ -364,7 +372,7 @@ client.sendContact(jid, [{
 
 #### 📦 Sticker Pack
 
-`sendStickerPack(jid: string, sources?: (Buffer | string | Readable)[], quote?: object, extraContent?: object, options?: object)`
+`sendStickerPack(jid: string, sources: (Buffer | string | Readable)[], quote?: object, extraContent?: object, options?: object)`
 
 ```javascript
 client.sendStickerPack(jid, [
@@ -379,7 +387,7 @@ client.sendStickerPack(jid, [
 
 #### 🖼️ Album
 
-`sendAlbum(jid: string, sources?: object[], quote?: object, options?: object)`
+`sendAlbum(jid: string, sources: object[], quote?: object, options?: object)`
 
 ```javascript
 client.sendAlbum(jid, [{
@@ -519,7 +527,7 @@ client.sendInteractive(jid, EXAMPLE_BUTTONS, m, {
 `sendLegacyButton(jid: string, rawButtons: object[], quote?: object, extraContent?: object, options?: object)`
 
 ```javascript
-// --- Regular buttons message
+// Regular buttons message
 client.sendLegacyButton(jid, [{
   text: '👋🏻 SignUp',
   id: '#SignUp'
@@ -531,7 +539,7 @@ client.sendLegacyButton(jid, [{
   viewOnce: false
 })
 
-// --- Buttons with Media & List
+// Buttons with Media & List
 client.sendLegacyButton(jid, [{
   text: '👋🏻 Rating',
   id: '#Rating'
@@ -763,6 +771,20 @@ client.sendRich(jid, [{
   disableForward: false,
   forceAsFooter: false
 })
+```
+
+#### ↩️ Copy & Forward
+
+`sendCopy(jid: string, content: object, options?: object)`
+
+```javascript
+client.sendCopy(jid, m)
+
+// With a custom forwarding score
+client.sendCopy(jid, m, { forwardScore: 1000 })
+
+// With a quoted message
+client.sendCopy(jid, m, { quote: m })
 ```
 
 #### 🧰 Additional Options
