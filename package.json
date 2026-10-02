@@ -1,6 +1,6 @@
 {
    "name": "@itsliaaa/starforge",
-   "version": "0.0.0-alpha.1",
+   "version": "0.0.0-alpha.2",
    "description": "A toolkit for building WhatsApp bots with Zapo.",
    "main": "./lib/index.js",
    "exports": {
@@ -27,6 +27,7 @@
    "keywords": [
       "whatsapp",
       "whatsapp-bot",
+      "baileys",
       "zapo",
       "toolkit",
       "automation",
@@ -37,6 +38,7 @@
       "zip",
       "html",
       "mutex",
+      "semaphore",
       "queue"
    ],
    "homepage": "https://github.com/itsliaaa/starforge#readme",

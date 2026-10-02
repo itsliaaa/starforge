@@ -30,6 +30,35 @@
 
 ☕ For donation: [Saweria](https://saweria.co/itsliaaa)
 
+### 📋 Table of Content
+  - [⚠️ Notice](#%EF%B8%8F-notice)
+  - [📥 Installation](#-installation)
+  - [🧩 Example](#-example)
+  - [📄 Serialized Message](#-serialized-message)
+  - [✉️ Sending Message](#%EF%B8%8F-sending-message)
+    - [💭 Text](#-text)
+    - [😄 Reaction](#-reaction)
+    - [📰 Link Preview](#-link-preview)
+    - [🖼️ Media](#%EF%B8%8F-media)
+    - [🗒️ Sticker](#%EF%B8%8F-sticker)
+    - [👤 Contact](#-contact)
+    - [📦 Sticker Pack](#-sticker-pack)
+    - [🖼️ Album](#%EF%B8%8F-album)
+    - [📊 Poll](#-poll)
+    - [📋 Poll Result](#-poll-result)
+    - [🗄️ Interactive](#%EF%B8%8F-interactive)
+    - [🔘 Legacy Button](#-legacy-button)
+    - [📋 Legacy List](#-legacy-list)
+    - [✨ Rich](#-rich)
+    - [🧰 Additional Options](#-additional-options)
+  - [👤 Chats](#-chats)
+    - [rejectCall](#rejectcallcallid-string-callcreatorjid-string)
+    - [resolveUserJid](#resolveuserjidjid-string)
+    - [updateMemberLabel](#updatememberlabeljid-string-label-string)
+    - [setChatEphemeral](#setchatephemeraljid-string-durationsecs-number)
+  - [❤️ Credits](#%EF%B8%8F-credits)
+  - [📄 License](#-license)
+
 ### ⚠️ Notice
 
 This project is simply a toolkit for building WhatsApp bots using Zapo, and will be used for [@itsliaaa/starseed](https://github.com/itsliaaa/starseed#readme).
@@ -37,7 +66,7 @@ This project is simply a toolkit for building WhatsApp bots using Zapo, and will
 ### 📥 Installation
 
 ```bash
-npm install @itsliaaa/starforge qr magic-bytes.js sharp
+npm install @itsliaaa/starforge magic-bytes.js qr sharp zapo-js
 ```
 
 - `qr` is used by the `encodeQR()` function.
@@ -204,14 +233,26 @@ The following example shows the serialized message payload.
 
 > 📕 Note: You must call `extendSocket(client)` before using any of the following functions.
 
-> 💡 Tip: `options` is simplified to make it easier to send messages with specific `contextInfo` fields.
-
 #### 💭 Text
 
 `sendText(jid: string, rawText: string, quote?: object, extraContent?: object, options?: object)`
 
 ```javascript
 client.sendText(jid, 'Hello 👋🏻', m)
+
+// Send as a group status with a custom font color, background color, and font style
+client.sendText(jid, 'Hello 👋🏻', m, {
+   // RGB: 230, 230, 250
+   fontColor: '#E6E6FA',
+
+   // RGB: 75, 0, 130
+   backgroundColor: '#4B0082',
+
+   // MORNINGBREEZE_REGULAR
+   fontType: 7
+}, {
+   groupStatus: true
+})
 ```
 
 #### 😄 Reaction
@@ -724,7 +765,29 @@ client.sendRich(jid, [{
 })
 ```
 
-### 🧰 Additional Functions
+#### 🧰 Additional Options
+
+> 💡 Tip: You can use the following additional options in the `options` parameter of every function returned by `extendSocket()`.
+
+```javascript
+// The message will disappear after 1 second when you open the chat
+client.sendText(jid, '🗄️ Secret Password: *4640*', m, null, {
+  readTimeout: 1
+})
+
+// The message will be sent as a group status
+client.sendText(jid, 'Group Status ✨', null, null, {
+  groupStatus: true,
+
+  // Optional, use this if you want to enable Close Friends
+  closeFriends: {
+    name: 'To My Friends!',
+    emoji: '🍅'
+  }
+})
+```
+
+### 👤 Chats
 
 #### `rejectCall(callId: string, callCreatorJid: string)`
 
@@ -733,3 +796,17 @@ client.sendRich(jid, [{
 #### `updateMemberLabel(jid: string, label: string)`
 
 #### `setChatEphemeral(jid: string, durationSecs: number)`
+
+### ❤️ Credits
+
+<!-- Please do not replace my name with yours. It's disrespectful. -->
+
+**This project is created and maintained by [Lia Wynn](https://github.com/itsliaaa)**
+
+Thanks to the Zapo maintainers and contributors for providing an amazing and modern TypeScript library for interacting with the WhatsApp Web API.
+
+Please do not remove or alter the original credits, copyright notices, or attributions.
+
+### 📄 License
+
+This library is licensed under the [Apache License 2.0](LICENSE)
