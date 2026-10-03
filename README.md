@@ -31,34 +31,37 @@
 ☕ For donation: [Saweria](https://saweria.co/itsliaaa)
 
 ### 📋 Table of Content
-  - [⚠️ Notice](#%EF%B8%8F-notice)
-  - [📥 Installation](#-installation)
-  - [🧩 Example](#-example)
-  - [📄 Serialized Message](#-serialized-message)
-  - [✉️ Sending Message](#%EF%B8%8F-sending-message)
-    - [💭 Text](#-text)
-    - [😄 Reaction](#-reaction)
-    - [📰 Link Preview](#-link-preview)
-    - [🖼️ Media](#%EF%B8%8F-media)
-    - [🗒️ Sticker](#%EF%B8%8F-sticker)
-    - [👤 Contact](#-contact)
-    - [📦 Sticker Pack](#-sticker-pack)
-    - [🖼️ Album](#%EF%B8%8F-album)
-    - [📊 Poll](#-poll)
-    - [📋 Poll Result](#-poll-result)
-    - [🗄️ Interactive](#%EF%B8%8F-interactive)
-    - [🔘 Legacy Button](#-legacy-button)
-    - [📋 Legacy List](#-legacy-list)
-    - [✨ Rich](#-rich)
-    - [↩️ Copy & Forward](#%EF%B8%8F-copy--forward)
-    - [🧰 Additional Options](#-additional-options)
-  - [👤 Chats](#-chats)
-    - [rejectCall](#rejectcallcallid-string-callcreatorjid-string)
-    - [resolveUserJid](#resolveuserjidjid-string)
-    - [updateMemberLabel](#updatememberlabeljid-string-label-string)
-    - [setChatEphemeral](#setchatephemeraljid-string-durationsecs-number)
-  - [❤️ Credits](#%EF%B8%8F-credits)
-  - [📄 License](#-license)
+- [⚠️ Notice](#%EF%B8%8F-notice)
+- [📥 Installation](#-installation)
+- [🧩 Example](#-example)
+- [📄 Serialized Message](#-serialized-message)
+- [✉️ Sending Message](#%EF%B8%8F-sending-message)
+  - [💭 Text](#-text)
+  - [😄 Reaction](#-reaction)
+  - [📰 Link Preview](#-link-preview)
+  - [🖼️ Media](#%EF%B8%8F-media)
+  - [🗒️ Sticker](#%EF%B8%8F-sticker)
+  - [👤 Contact](#-contact)
+  - [📦 Sticker Pack](#-sticker-pack)
+  - [🖼️ Album](#%EF%B8%8F-album)
+  - [📊 Poll](#-poll)
+  - [📋 Poll Result](#-poll-result)
+  - [🗄️ Interactive](#%EF%B8%8F-interactive)
+  - [🎠 Carousel](#-carousel)
+  - [🔘 Legacy Button](#-legacy-button)
+  - [📋 Legacy List](#-legacy-list)
+  - [✨ Rich](#-rich)
+  - [↩️ Copy & Forward](#%EF%B8%8F-copy--forward)
+  - [🧰 Additional Options](#-additional-options)
+    - 🕒 [Read Timeout](#-additional-options)
+    - 👥 [Group Status](#-additional-options)
+- [👤 Chats](#-chats)
+  - [rejectCall](#rejectcallcallid-string-callcreatorjid-string)
+  - [resolveUserJid](#resolveuserjidjid-string)
+  - [updateMemberLabel](#updatememberlabeljid-string-label-string)
+  - [setChatEphemeral](#setchatephemeraljid-string-durationsecs-number)
+- [❤️ Credits](#%EF%B8%8F-credits)
+- [📄 License](#-license)
 
 ### ⚠️ Notice
 
@@ -347,7 +350,7 @@ client.sendContact(jid, [{
   website: 'https://example.com',
   location: 'New York, USA',
   other: '',
-  number: '15551234567'
+  number: '155512345678'
 }], m)
 
 // You can also send multiple contacts at once
@@ -439,10 +442,12 @@ client.sendPollResult(jid, '📋 Poll Results', [{
 `sendInteractive(jid: string, rawButtons?: object[], quote?: object, extraContent?: object, options?: object)`
 
 ```javascript
-// You can add "icon" to each button to use a custom button icon
 const EXAMPLE_BUTTONS = [{
   text: '👉🏻 Click Me',
-  id: 'command_id'
+  id: 'command_id',
+
+  // You can add "icon" to each button to use a custom button icon
+  icon: 'DEFAULT' 
 }, {
   text: '📃 Copy Code',
   copy: '@itsliaaa/starforge'
@@ -466,6 +471,10 @@ const EXAMPLE_BUTTONS = [{
       id: 'free_coupon_id'
     }]
   }]
+}, {
+  // Add custom buttons
+  name: 'cta_reminder',
+  buttonParamsJson: '{}'
 }]
 
 client.sendInteractive(jid, EXAMPLE_BUTTONS, m, {
@@ -503,7 +512,12 @@ client.sendInteractive(jid, EXAMPLE_BUTTONS, m, {
 client.sendInteractive(jid, EXAMPLE_BUTTONS, m, {
   media: /* Buffer | string | Readable */,
   title: '✨ Using Various Options',
+
+  // Classic footer text
   text: '🗄️ Interactive Message',
+
+  // Audio footer (currently iOS only & not all WhatsApp versions render it)
+  audioFooter: /* Buffer | string | Readable */,
 
   // Force header type
   document: false,
@@ -519,6 +533,61 @@ client.sendInteractive(jid, EXAMPLE_BUTTONS, m, {
   offerCode: '@itsliaaa/starforge',
   offerUrl: 'https://www.npmjs.com/package/@itsliaaa/starforge',
   offerExpiration: Date.now() + 86_400_000
+})
+```
+
+#### 🎠 Carousel
+
+`sendCarousel(jid: string, rawCards: object[], quote?: object, extraContent?: object, options?: object)`
+
+```javascript
+const EXAMPLE_BUTTONS = [{
+  text: '🛒 Check Out!',
+  url: 'https://www.npmjs.com/package/@itsliaaa/starforge',
+  icon: 'DEFAULT'
+}, {
+  text: '📞 Call Us',
+  call: '6281111111111'
+}]
+
+const CARDS = [{
+  // Media is required for carousel cards
+  media: /* Buffer | string | Readable */,
+
+  text: 'Card #1',
+
+  // Optional
+  buttons: EXAMPLE_BUTTONS
+}, {
+  media: /* Buffer | string | Readable */,
+  title: '✨ Using Various Options',
+  text: 'Card #2',
+
+  // Classic footer text
+  footer: '@itsliaaa/starforge',
+
+  // Audio footer (currently iOS only & not all WhatsApp versions render it)
+  audioFooter: /* Buffer | string | Readable */,
+
+  // Force header type
+  product: false,
+
+  // Wrap all buttons in a single option
+  optionText: '👉🏻 Tap Here',
+  optionTitle: '🧩 Wrapped Buttons',
+
+  // Limited time offer
+  offerText: '🔖 Limited Time Offer',
+  offerCode: '@itsliaaa/starforge',
+  offerUrl: 'https://www.npmjs.com/package/@itsliaaa/starforge',
+  offerExpiration: Date.now() + 86_400_000,
+
+  buttons: EXAMPLE_BUTTONS
+}]
+
+sock.sendCarousel(jid, CARDS, m, {
+  text: '🎠 Carousel Message',
+  footer: 'TESTING!'
 })
 ```
 
@@ -749,6 +818,17 @@ client.sendRich(jid, [{
   tip: '@itsliaaa/starforge'
 }, {
   foaText: '# 🔥 LARGE Text'
+}, {
+   compactEntity: [{
+      title: 'my name',
+      subtitle: 'my subtitle',
+      secondarySubtitle: 'my secondary subtitle',
+      url: 'https://github.com/itsliaaa/starforge',
+      entityType: 'FOLLOW',
+      actionType: 'PAGE',
+      isVerified: true,
+      imageUrl: 'https://path-to-tiny-image.com/'
+   }]
 }, {
   actionUrls: [{
     text: '💰 Donate Me!',

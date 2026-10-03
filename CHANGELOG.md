@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.0.0-alpha.4
+
+- feat: add `sendCarousel()`.
+- feat: support `audioFooter` *(currently iOS only & not all WhatsApp versions render it)* in `sendInteractive()` and `sendCarousel()`.
+- feat: support `compactEntity[]` in `sendRich()` content.
+- fix: prevent serializer fallback value from being `undefined`.
+
 ## 0.0.0-alpha.3
 
 - refactor: adjusted `createSqliteDatabase()` logical flow.
