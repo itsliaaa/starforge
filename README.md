@@ -53,6 +53,7 @@
   - [✨ Rich](#-rich)
   - [↩️ Copy & Forward](#%EF%B8%8F-copy--forward)
   - [🧰 Additional Options](#-additional-options)
+    - 🤖 [AI](#-additional-options)
     - 🕒 [Read Timeout](#-additional-options)
     - 👥 [Group Status](#-additional-options)
 - [👤 Chats](#-chats)
@@ -65,7 +66,7 @@
 
 ### ⚠️ Notice
 
-This project is simply a toolkit for building WhatsApp bots using Zapo, and will be used for [@itsliaaa/starseed](https://github.com/itsliaaa/starseed#readme).
+This project is a toolkit for building WhatsApp bots with Zapo, and will be used for [@itsliaaa/starseed](https://github.com/itsliaaa/starseed#readme).
 
 ### 📥 Installation
 
@@ -283,6 +284,7 @@ client.sendReact(jid, '🫪', m.key, { groupStatus: true })
 client.sendAdText(jid, 'Link Preview 🌱', m, {
   title: 'Interesting Article!',
   description: 'See more...',
+  thumbnailUrl: 'https://www.npmjs.com/package/@itsliaaa/starforge',
   thumbnail: /* Buffer | string | Readable */,
   favicon: /* Buffer | string | Readable */,
   largeThumbnail: true,
@@ -298,12 +300,18 @@ client.sendAdText(jid, 'Link Preview 🌱', m, {
 ```javascript
 client.sendMedia(jid, 'https://files.catbox.moe/jtofzb.jpeg', '🍂', m)
 
+// Send video as Motion Photo (a.k.a. Photo Live)
+client.sendMedia(jid, 'https://path-to-video.mp4/', '📽️ Motion Photo a.k.a. Photo Live', m, {
+   motionThumbnail: 'https://path-to-image.jpg'
+})
+
 client.sendMedia(jid, 'https://files.catbox.moe/jtofzb.jpeg', '🍂', m, {
   // Force the media type
   document: true,
   audio: false,
   ptt: false,
   ptv: false,
+  sticker: false,
   gifPlayback: false,
 
   // Additional payload
@@ -329,10 +337,12 @@ client.sendMedia(jid, 'https://files.catbox.moe/jtofzb.jpeg', '🍂', m, null, {
 ```javascript
 client.sendSticker(jid, 'https://files.catbox.moe/jtofzb.jpeg', m)
 
-// Add an exclusive metadata
 client.sendSticker(jid, 'https://files.catbox.moe/jtofzb.jpeg', m, {
+  // Add custom sticker metadata
   isAiSticker: true,
   premium: 0,
+
+  // Modify EXIF without external WebP dependencies
   name: '@itsliaaa/starforge',
   publisher: 'Stellar'
 })
@@ -395,10 +405,22 @@ client.sendStickerPack(jid, [
 ```javascript
 client.sendAlbum(jid, [{
   media: /* Buffer | string | Readable */,
-  caption: '🌱 Album Message'
+  caption: '🌱 Media #1'
 }, {
   media: /* Buffer | string | Readable */,
-  caption: '🌱 Album Message'
+  caption: '🌱 Media #2'
+}], m)
+
+// Send videos as Motion Photos
+// "sendAlbum()" uses the same media input format as "sendMedia()"
+client.sendAlbum(jid, [{
+  media: /* Buffer | string | Readable */,
+  motionThumbnail: /* Buffer | string | Readable */,
+  caption: '📽️ w/Motion Photo #1'
+}, {
+  media: /* Buffer | string | Readable */,
+  motionThumbnail: /* Buffer | string | Readable */,
+  caption: '📽️ w/Motion Photo #2'
 }], m)
 ```
 
@@ -454,7 +476,13 @@ const EXAMPLE_BUTTONS = [{
 }, {
   text: '🌐 Open URL',
   url: 'https://www.npmjs.com/package/@itsliaaa/starforge',
+
+  // More optional options for "cta_url"
+  merchantUrl: '',
+  canonicalUrl: '',
+  landingPageUrl: '',
   isPaymentPreview: false,
+  useWebviewPresentation: null,
   useWebview: true
 }, {
   text: '📞 Call',
@@ -569,7 +597,7 @@ const CARDS = [{
   // Audio footer (currently iOS only & not all WhatsApp versions render it)
   audioFooter: /* Buffer | string | Readable */,
 
-  // Force header type
+  // Force header type, carousel cards cannot use document or location headers
   product: false,
 
   // Wrap all buttons in a single option
@@ -585,7 +613,7 @@ const CARDS = [{
   buttons: EXAMPLE_BUTTONS
 }]
 
-sock.sendCarousel(jid, CARDS, m, {
+client.sendCarousel(jid, CARDS, m, {
   text: '🎠 Carousel Message',
   footer: 'TESTING!'
 })
@@ -608,8 +636,7 @@ client.sendLegacyButton(jid, [{
   viewOnce: false
 })
 
-// Buttons with Media & List
-client.sendLegacyButton(jid, [{
+const EXAMPLE_BUTTONS = [{
   text: '👋🏻 Rating',
   id: '#Rating'
 }, {
@@ -631,10 +658,27 @@ client.sendLegacyButton(jid, [{
       description: '',
       id: '#CouponCode'
     }]
-  }]
-}], m, {
+  }],
+
+  // Force the button to use RESPONSE instead of NATIVE_FLOW (required when using a location header)
+  // type: 1
+}]
+
+// Buttons with Media & List
+client.sendLegacyButton(jid, EXAMPLE_BUTTONS, m, {
   media: /* Buffer | string | Readable */,
   text: '👆🏻 Buttons and List!',
+  footer: '@itsliaaa/starforge'
+})
+
+// Buttons with the legacy button style
+client.sendLegacyButton(jid, EXAMPLE_BUTTONS, m, {
+  location: {
+    name: '📍 Location Header',
+    address: '@itsliaaa/starforge'
+  },
+  media: /* Buffer | string | Readable */,
+  text: '👆🏻 Old Buttons and List!',
   footer: '@itsliaaa/starforge'
 })
 ```
@@ -860,10 +904,13 @@ client.sendRich(jid, [{
 ```javascript
 client.sendCopy(jid, m)
 
-// With a custom forwarding score
+// Custom forwarding score
 client.sendCopy(jid, m, { forwardScore: 1000 })
 
-// With a quoted message
+// Disable forwarding score
+client.sendCopy(jid, m, { forwardScore: false })
+
+// Quote a message
 client.sendCopy(jid, m, { quote: m })
 ```
 
@@ -872,12 +919,17 @@ client.sendCopy(jid, m, { quote: m })
 > 💡 Tip: You can use the following additional options in the `options` parameter of every function returned by `extendSocket()`.
 
 ```javascript
-// The message will disappear after 1 second when you open the chat
+// Add an "AI" icon (only available in private chats)
+client.sendText(jid, '🤖 Hello', m, null, {
+   isAi: true
+})
+
+// The message will disappear 1 second after you open the chat
 client.sendText(jid, '🗄️ Secret Password: *4640*', m, null, {
   readTimeout: 1
 })
 
-// The message will be sent as a group status
+// Send the message as a group status
 client.sendText(jid, 'Group Status ✨', null, null, {
   groupStatus: true,
 
@@ -905,7 +957,7 @@ client.sendText(jid, 'Group Status ✨', null, null, {
 
 **This project is created and maintained by [Lia Wynn](https://github.com/itsliaaa)**
 
-Thanks to the Zapo maintainers and contributors for providing an amazing and modern TypeScript library for interacting with the WhatsApp Web API.
+Thanks to the [Zapo](https://github.com/vinikjkkj/zapo) maintainers and contributors for providing an amazing and modern TypeScript library for interacting with the WhatsApp Web API.
 
 Please do not remove or alter the original credits, copyright notices, or attributions.
 
