@@ -1,12 +1,21 @@
 # Changelog
 
+## 0.0.0-alpha.6 - 2026-09-05
+
+- docs: add more `sendRich()` example.
+- fix: handle `htmlPayload[]` correctly in `sendRich()`.
+- feat: add `labels[]` and `mapItems[]` in `sendRich()`.
+- feat: add configurable media processor environment variables.
+- fix: use temporary files for media inputs in several FFmpeg processes.
+- refactor: restructure the logical flow of `createSqliteDatabase()`.
+
 ## 0.0.0-alpha.5 - 2026-09-04
 
 - docs: add `isAi` option example.
 - docs: add more `sendLegacyButton()` option example.
 - fix: optimize media processor compression.
 - fix: `updateMemberLabel()` constructor invocation ([#1](https://github.com/itsliaaa/starforge/issues/1)).
-- feat: support `motionThumbnail` in `sendMedia()` and `sendAlbum()`.
+- feat: support `motionThumbnail` *(Photo Live)* in `sendMedia()` and `sendAlbum()`.
 
 ## 0.0.0-alpha.4 - 2026-09-03
 

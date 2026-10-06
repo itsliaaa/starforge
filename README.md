@@ -61,12 +61,15 @@
   - [resolveUserJid](#resolveuserjidjid-string)
   - [updateMemberLabel](#updatememberlabeljid-string-label-string)
   - [setChatEphemeral](#setchatephemeraljid-string-durationsecs-number)
+- [🧳 Environments](#-environments)
 - [❤️ Credits](#%EF%B8%8F-credits)
 - [📄 License](#-license)
 
 ### ⚠️ Notice
 
-This project is a toolkit for building WhatsApp bots with Zapo, and will be used for [@itsliaaa/starseed](https://github.com/itsliaaa/starseed#readme).
+This project is a toolkit for building WhatsApp bots with Zapo and will be used for [@itsliaaa/starseed](https://github.com/itsliaaa/starseed#readme).
+
+**This library contains no hidden auto-follow code or behavior. It will never automatically follow or subscribe to WhatsApp Channels (Newsletters) behind your back.**
 
 ### 📥 Installation
 
@@ -102,7 +105,7 @@ extendSocket(client)
 const serialize = createSerializer(client)
 
 client.on('auth_qr', async ({ qr }) => {
-  const { ascii } = await encodeQR(qr)
+  const { ascii, getPngBuffer } = await encodeQR(qr)
   console.log('📷 Scan this QR', ascii)
 })
 
@@ -412,7 +415,7 @@ client.sendAlbum(jid, [{
 }], m)
 
 // Send videos as Motion Photos
-// "sendAlbum()" uses the same media input format as "sendMedia()"
+// "sendAlbum()" uses the same motion thumbnail input format as "sendMedia()"
 client.sendAlbum(jid, [{
   media: /* Buffer | string | Readable */,
   motionThumbnail: /* Buffer | string | Readable */,
@@ -502,7 +505,8 @@ const EXAMPLE_BUTTONS = [{
 }, {
   // Add custom buttons
   name: 'cta_reminder',
-  buttonParamsJson: '{}'
+  paramsJson: {},
+  icon: 'DOCUMENT'
 }]
 
 client.sendInteractive(jid, EXAMPLE_BUTTONS, m, {
@@ -544,7 +548,8 @@ client.sendInteractive(jid, EXAMPLE_BUTTONS, m, {
   // Classic footer text
   text: '🗄️ Interactive Message',
 
-  // Audio footer (currently iOS only & not all WhatsApp versions render it)
+  // Audio footer
+  // (currently iOS only & not all WhatsApp versions render it)
   audioFooter: /* Buffer | string | Readable */,
 
   // Force header type
@@ -594,7 +599,8 @@ const CARDS = [{
   // Classic footer text
   footer: '@itsliaaa/starforge',
 
-  // Audio footer (currently iOS only & not all WhatsApp versions render it)
+  // Audio footer
+  // (currently iOS only & not all WhatsApp versions render it)
   audioFooter: /* Buffer | string | Readable */,
 
   // Force header type, carousel cards cannot use document or location headers
@@ -629,11 +635,11 @@ client.sendLegacyButton(jid, [{
   text: '👋🏻 SignUp',
   id: '#SignUp'
 }], m, {
+  // Optional, change to "true" if want proper render on WhatsApp Web
+  viewOnce: false,
+
   text: '👆🏻 Buttons!',
   footer: '@itsliaaa/starforge',
-
-  // Optional, change to "true" if want proper render on WhatsApp Web
-  viewOnce: false
 })
 
 const EXAMPLE_BUTTONS = [{
@@ -641,6 +647,11 @@ const EXAMPLE_BUTTONS = [{
   id: '#Rating'
 }, {
   text: '📋 Select',
+
+  // Force the button to use RESPONSE
+  // instead of NATIVE_FLOW (required when using a location header)
+  // type: 1,
+
   sections: [{
     title: '✨ Section 1',
     rows: [{
@@ -658,10 +669,7 @@ const EXAMPLE_BUTTONS = [{
       description: '',
       id: '#CouponCode'
     }]
-  }],
-
-  // Force the button to use RESPONSE instead of NATIVE_FLOW (required when using a location header)
-  // type: 1
+  }]
 }]
 
 // Buttons with Media & List
@@ -712,11 +720,35 @@ client.sendLegacyList(jid, [{
 
 #### ✨ Rich
 
-`sendRich(jid: string, rawSections: object[], quote?: object, extraContent?: object, options?: object)`
+`sendRich(jid: string, rawSections: string | object[], quote?: object, extraContent?: object, options?: object)`
 
 ```javascript
+const EXAMPLE_TEXT = `
+Here's a table comparing grapes and bananas:
+
+| **Characteristic** | **Grapes** | **Banana** |
+| --- | --- | --- |
+| **Type** | Fruit, berry | Fruit, large herbaceous plant |
+| **Color** | Purple, red, or green | Yellow or green |
+| **Taste** | Sweet and slightly tart | Sweet and creamy |
+`
+
+client.sendRich(jid, EXAMPLE_TEXT, m)
+
+// More advanced rich message types
 client.sendRich(jid, [{
   text: '# 🔨 @itsliaaa/starforge\n\n---\n',
+}, {
+  labels: [{
+    text: '🔨 Starforge',
+    type: 'NEGATIVE'
+  }, {
+    text: '⚡ Zapo',
+    type: 'POSITIVE'
+  }, {
+    text: '📦 Modular',
+    type: 'NEUTRAL'
+  }]
 }, {
   language: 'javascript',
   code: `console.log("Hello World")`
@@ -874,6 +906,29 @@ client.sendRich(jid, [{
       imageUrl: 'https://path-to-tiny-image.com/'
    }]
 }, {
+  queryStatus: 'FETCHED',
+  motivation: 'Every journey begins with a place worth remembering.',
+  mapItems: [{
+    id: String(Date.now()),
+    name: 'Starforge Observatory',
+    description: 'A quiet little place beneath the city lights, perfect for curious minds, late-night conversations, and watching the stars.',
+    location: {
+      latitude: -6.175392,
+      longitude: 106.824964
+    },
+    address: {
+      street: 'Jl. Langit Senja No. 42',
+      region: 'Central Jakarta',
+      country: 'ID'
+    },
+    priceLevel: '$$',
+    openingStatus: 'OPEN',
+    type: 'PLACE',
+    timeZone: 'Asia/Jakarta',
+    rating: { avgRating: 4.8 },
+    imageUrl: 'https://imgkub.com/images/2026/10/05/STARFORGE_2100_61996aca6cde.jpeg'
+  }]
+}, {
   actionUrls: [{
     text: '💰 Donate Me!',
     url: 'https://saweria.co/itsliaaa'
@@ -950,6 +1005,27 @@ client.sendText(jid, 'Group Status ✨', null, null, {
 #### `updateMemberLabel(jid: string, label: string)`
 
 #### `setChatEphemeral(jid: string, durationSecs: number)`
+
+### 🧳 Environments
+
+The following environment variables are supported. They can be configured through the environment or a `.env` file using [`dotenv`](https://www.npmjs.com/package/dotenv).
+
+```ini
+# .env
+
+# Defaults to os.tmpdir() when unset
+TEMPORARY_PATH=
+
+FFMPEG_PATH=ffmpeg
+
+FFPROBE_PATH=ffprobe
+
+FFMPEG_TIMEOUT=30000
+
+FFPROBE_TIMEOUT=15000
+
+FETCH_TIMEOUT=30000
+```
 
 ### ❤️ Credits
 
