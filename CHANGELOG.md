@@ -1,9 +1,13 @@
 # Changelog
 
-## 0.0.0-alpha.6 - 2026-09-05
+## 0.0.0-alpha.7 - 2026-09-06
+
+- fix: prevent `sendMedia()` from throwing errors frequently.
+
+## 0.0.0-alpha.6 - 2026-09-06
 
 - docs: add more `sendRich()` example.
-- fix: handle `htmlPayload[]` correctly in `sendRich()`.
+- fix: handle `htmlPayload` correctly in `sendRich()`.
 - feat: add `labels[]` and `mapItems[]` in `sendRich()`.
 - feat: add configurable media processor environment variables.
 - fix: use temporary files for media inputs in several FFmpeg processes.
