@@ -77,8 +77,8 @@ This project is a toolkit for building WhatsApp bots with Zapo and will be used 
 npm install @itsliaaa/starforge magic-bytes.js qr sharp zapo-js
 ```
 
-- `qr` is used by the `encodeQR()` function.
-- `magic-bytes.js` is used by the `detectFileType()` function.
+- `qr` is required by the `encodeQR()` function.
+- `magic-bytes.js` is used by the `detectFileType()` function. Alternatively, you can install `file-type`.
 - `sharp` is used for image processing tasks such as generating thumbnails, creating favicons, `createMediaProcessor()`, and more. Alternatively, you can install `@napi-rs/image` or `jimp`.
 
 ### 🧩 Example
@@ -116,7 +116,7 @@ client.on('connection', ({ status }) => {
 
 client.on('message', async (m) => {
   // The serializer adds several properties to "m"
-  await serialize(m)
+  m = await serialize(m)
 
   if (m.text === 'ping') {
     m.reply('🏓 Pong')
@@ -250,22 +250,26 @@ client.sendText(jid, 'Hello 👋🏻', m)
 
 // Send as view once
 client.sendText(jid, 'Hello 👋🏻', m, {
-   viewOnce: true
+  viewOnce: true
 })
 
 // Send as a group status with a custom font color, background color, and font style
 client.sendText(jid, 'Hello 👋🏻', m, {
-   // RGB: 230, 230, 250
-   fontColor: '#E6E6FA',
+  // RGB: 230, 230, 250
+  fontColor: '#E6E6FA',
 
-   // RGB: 75, 0, 130
-   backgroundColor: '#4B0082',
+  // RGB: 75, 0, 130
+  backgroundColor: '#4B0082',
 
-   // MORNINGBREEZE_REGULAR
-   fontType: 7
+  // MORNINGBREEZE_REGULAR
+  fontType: 7
 }, {
-   groupStatus: true
+  groupStatus: true
 })
+
+// Send with a spoiler, hiding the content between || pipes
+// (currently not all WhatsApp versions render it)
+client.sendText(m.chat, '🗄️ Secret Password: ||*4640*||', m)
 ```
 
 #### 😄 Reaction
@@ -284,15 +288,46 @@ client.sendReact(jid, '🫪', m.key, { groupStatus: true })
 `sendAdText(jid: string, rawText: string, quote?: object, extraContent?: object, options?: object)`
 
 ```javascript
-client.sendAdText(jid, 'Link Preview 🌱', m, {
+// Simple and basic usage
+client.sendAdText(jid, 'A tiny discovery ✨', m, {
   title: 'Interesting Article!',
   description: 'See more...',
-  thumbnailUrl: 'https://www.npmjs.com/package/@itsliaaa/starforge',
+  thumbnail: /* Buffer | string | Readable */
+})
+
+client.sendAdText(jid, 'Something worth reading 📖', m, {
+  title: 'Interesting Article!',
+  description: 'See more...',
   thumbnail: /* Buffer | string | Readable */,
+
+  // Custom thumbnail URL
+  thumbnailUrl: 'https://www.npmjs.com/package/@itsliaaa/starforge',
+
+  // Custom favicon image
   favicon: /* Buffer | string | Readable */,
+
+  // Render a large, high quality thumbnail
   largeThumbnail: true,
   width: 1920,
   height: 1080
+})
+
+// Send as a group status
+client.sendAdText(jid, 'Fresh from the digital garden 🌿', m, {
+  title: 'Interesting Article!',
+  description: 'See more...',
+  thumbnail: /* Buffer | string | Readable */
+
+  // RGB: 255, 214, 102
+  fontColor: '#FFD666',
+
+  // RGB: 24, 18, 43
+  backgroundColor: '#18122B',
+
+  // MORNINGBREEZE_REGULAR
+  fontType: 7
+}, {
+  groupStatus: true
 })
 ```
 
@@ -485,7 +520,7 @@ const EXAMPLE_BUTTONS = [{
   canonicalUrl: '',
   landingPageUrl: '',
   isPaymentPreview: false,
-  useWebviewPresentation: null,
+  useWebviewPresentation: 'full',
   useWebview: true
 }, {
   text: '📞 Call',
@@ -635,7 +670,7 @@ client.sendLegacyButton(jid, [{
   text: '👋🏻 SignUp',
   id: '#SignUp'
 }], m, {
-  // Optional, change to "true" if want proper render on WhatsApp Web
+  // Optional, change to "true" if want proper render on WhatsApp iOS
   viewOnce: false,
 
   text: '👆🏻 Buttons!',
@@ -993,6 +1028,11 @@ client.sendText(jid, 'Group Status ✨', null, null, {
     name: 'To My Friends!',
     emoji: '🍅'
   }
+})
+
+// Force send with a spoiler, hiding the content between || pipes
+client.sendText(jid, '👋🏻 Hello ||world!||', null, null, {
+   spoiler: true
 })
 ```
 

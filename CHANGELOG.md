@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.0.0-alpha.8 - 2026-09-08
+
+- docs: add more `sendAdText()` example.
+- feat: add `spoiler` boolean option *(currently not all WhatsApp versions render it)*.
+- feat: add patterns to automatically enable `spoiler` based on the several message body.
+- feat: support `file-type` as an alternative file type detector.
+- fix: prevent `compactEntity[]` in `sendRich()` from failing to display profile pictures.
+- fix: prevent `resolveContextInfo()` errors.
+- refactor: improved the logical flow of `levenshtein()`.
+
 ## 0.0.0-alpha.7 - 2026-09-06
 
 - fix: prevent `sendMedia()` from throwing errors frequently.
