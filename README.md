@@ -56,6 +56,7 @@
     - 🤖 [AI](#-additional-options)
     - 🕒 [Read Timeout](#-additional-options)
     - 👥 [Group Status](#-additional-options)
+    - 👁️ [Spoiler](#-additional-options)
 - [👤 Chats](#-chats)
   - [rejectCall](#rejectcallcallid-string-callcreatorjid-string)
   - [resolveUserJid](#resolveuserjidjid-string)
@@ -316,7 +317,7 @@ client.sendAdText(jid, 'Something worth reading 📖', m, {
 client.sendAdText(jid, 'Fresh from the digital garden 🌿', m, {
   title: 'Interesting Article!',
   description: 'See more...',
-  thumbnail: /* Buffer | string | Readable */
+  thumbnail: /* Buffer | string | Readable */,
 
   // RGB: 255, 214, 102
   fontColor: '#FFD666',
