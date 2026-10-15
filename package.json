@@ -1,6 +1,6 @@
 {
    "name": "@itsliaaa/starforge",
-   "version": "0.0.0-alpha.9",
+   "version": "0.0.0-alpha.10",
    "description": "A toolkit for building WhatsApp bots with Zapo.",
    "main": "./lib/index.js",
    "exports": {
@@ -62,6 +62,15 @@
          "optional": true
       },
       "jimp": {
+         "optional": true
+      },
+      "magic-bytes.js": {
+         "optional": true
+      },
+      "qr": {
+         "optional": true
+      },
+      "sharp": {
          "optional": true
       }
    },

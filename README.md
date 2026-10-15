@@ -70,17 +70,19 @@
 
 This project is a toolkit for building WhatsApp bots with Zapo and will be used for [@itsliaaa/starseed](https://github.com/itsliaaa/starseed#readme).
 
-**This library contains no hidden auto-follow code or behavior. It will never automatically follow or subscribe to WhatsApp Channels (Newsletters) behind your back.**
+**This library contains no hidden auto-follow code or behavior. It will never automatically follow or subscribe to WhatsApp Channels (Newsletters).**
 
 ### 📥 Installation
+
+This library follows a user-controlled dependency model. Additional dependencies are not required unless you use the features that rely on them. Install only the dependencies you need.
 
 ```bash
 npm install @itsliaaa/starforge magic-bytes.js qr sharp zapo-js
 ```
 
-- `qr` is required by the `encodeQR()` function.
-- `magic-bytes.js` is used by the `detectFileType()` function. Alternatively, you can install `file-type`.
-- `sharp` is used for image processing tasks such as generating thumbnails, creating favicons, `createMediaProcessor()`, and more. Alternatively, you can install `@napi-rs/image` or `jimp`.
+- `qr` is required by `encodeQR()`.
+- `magic-bytes.js` is used by `detectFileType()`. Alternatively, you can install `file-type`.
+- `sharp` is used for image processing tasks such as generating thumbnails, creating favicons, `createMediaProcessor()`, and more. Alternatively, you can install `@napi-rs/image` or `jimp`. Only one image processing backend is needed.
 
 ### 🧩 Example
 
@@ -189,6 +191,7 @@ The following example shows the serialized message payload.
   fromMe: false,
   isGroup: true,
   isPrivate: false,
+  isStatus: false,
   isBroadcast: false,
   isNewsletter: false,
   isMedia: false,
@@ -220,11 +223,14 @@ The following example shows the serialized message payload.
     fromMe: false,
     isGroup: true,
     isPrivate: false,
+    isStatus: false,
     isBroadcast: false,
     isNewsletter: false,
     isMedia: false,
     type: 'conversation',
-    fakeObj: { key: [Object], message: [e] },
+    expiration: 604800,
+    mentionedJid: [],
+    fakeObj: { key: [Object], message: [Object] },
     reply: [AsyncFunction: replyMessage],
     react: [AsyncFunction: reactMessage],
     getProfilePicture: [AsyncFunction: getProfilePicture]
@@ -254,8 +260,11 @@ client.sendText(jid, 'Hello 👋🏻', m, {
   viewOnce: true
 })
 
+// Send as a regular status
+client.sendText([jid, lid], 'Hello 👋🏻')
+
 // Send as a group status with a custom font color, background color, and font style
-client.sendText(jid, 'Hello 👋🏻', m, {
+client.sendText(jid, 'Hello 👋🏻', null, {
   // RGB: 230, 230, 250
   fontColor: '#E6E6FA',
 
@@ -314,7 +323,7 @@ client.sendAdText(jid, 'Something worth reading 📖', m, {
 })
 
 // Send as a group status
-client.sendAdText(jid, 'Fresh from the digital garden 🌿', m, {
+client.sendAdText(jid, 'Fresh from the digital garden 🌿', null, {
   title: 'Interesting Article!',
   description: 'See more...',
   thumbnail: /* Buffer | string | Readable */,
@@ -358,9 +367,17 @@ client.sendMedia(jid, 'https://files.catbox.moe/jtofzb.jpeg', '🍂', m, {
   mimetype: 'image/jpeg'
 })
 
+// Send as a regular status with Close Friends
+client.sendMedia([jid, lid], 'https://files.catbox.moe/jtofzb.jpeg', '🍂', null, null, {
+  closeFriends: {
+    name: 'To My Friends!',
+    emoji: '🍅'
+  }
+})
+
 // Send as a group status with Close Friends
 // Works with images, videos, and audio
-client.sendMedia(jid, 'https://files.catbox.moe/jtofzb.jpeg', '🍂', m, null, {
+client.sendMedia(jid, 'https://files.catbox.moe/jtofzb.jpeg', '🍂', null, null, {
   groupStatus: true,
   closeFriends: {
     name: 'To My Friends!',
@@ -598,7 +615,7 @@ client.sendInteractive(jid, EXAMPLE_BUTTONS, m, {
   optionTitle: '🧩 Wrapped Buttons',
 
   // Limited time offer
-  offerText: '🔖 Limited Time Offer',
+  offerText: '?? Limited Time Offer',
   offerCode: '@itsliaaa/starforge',
   offerUrl: 'https://www.npmjs.com/package/@itsliaaa/starforge',
   offerExpiration: Date.now() + 86_400_000

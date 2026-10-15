@@ -1,9 +1,15 @@
 # Changelog
 
+## 0.0.0-alpha.10 - 2026-09-15
+
+- fix: prevent circular references from `quoted.fakeObj` in the serializer.
+- feat: support sending statuses through all functions returned by `extendSocket()`.
+- feat: add `hasBotIndicator()` to detect incoming messages
+
 ## 0.0.0-alpha.9 - 2026-09-09
 
 - fix: support `0` and `1` values for `premium` and `isAiSticker` metadata in `sendSticker()` and `sendStickerPack()`.
-- feat: support metadata rewriting for select WhatsApp Lottie stickers in `sendSticker()` and `sendStickerPack()`.
+- feat: support metadata rewriting for WhatsApp Lottie stickers in `sendSticker()` and `sendStickerPack()`.
 - feat: support custom thumbnails for `review_and_pay` buttons in `sendInteractive()`.
 
 ## 0.0.0-alpha.8 - 2026-09-08
