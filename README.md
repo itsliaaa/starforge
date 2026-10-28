@@ -21,7 +21,7 @@
       <img src="https://img.shields.io/badge/node-%3E%3D20-339933?logo=node.js&labelColor=green&logoColor=white&style=for-the-badge"/>
    </a>
    <a href="https://bun.sh">
-      <img src="https://img.shields.io/badge/bun-%3E%3D1.3-fbf0df?logo=bun&labelColor=14151a&logoColor=white&style=for-the-badge"/>
+      <img src="https://img.shields.io/badge/bun-%3E%3D1.2-fbf0df?logo=bun&labelColor=14151a&logoColor=white&style=for-the-badge"/>
    </a>
    <a href="#">
       <img src="https://img.shields.io/badge/ESM-only?logo=javascript&labelColor=yellow&logoColor=black&style=for-the-badge"/>
@@ -102,7 +102,13 @@ const client = new WaClient({
 })
 
 // Extend the client immediately after creating it
-extendSocket(client)
+extendSocket(client, {
+  // Custom message ID prefix
+  messageIdPrefix: 'STARFORGE',
+
+  // Simulate typing and recording states before sending messages
+  simulatePresence: true
+})
 
 // Create the serializer
 const serialize = createSerializer(client)
@@ -140,34 +146,30 @@ The following example shows the serialized message payload.
   rawNode: {
     tag: 'message',
     attrs: {
-      from: '120111111111111111@g.us',
+      from: '434311111111111111@lid',
       type: 'text',
-      id: 'AC62067AG6D12C8741E9E0C2CE21F367',
-      participant: '43411111111111@lid',
-      sts: '1890322359495077',
+      id: 'AC75D8A10E220E8692FC161EBB5FD34A',
+      sts: '2792725867333038',
       notify: '‮‮',
-      addressing_mode: 'lid',
-      expiration: '604800',
-      participant_pn: '6281111111111@s.whatsapp.net',
-      t: '1790322359'
+      sender_pn: '6287711111111@s.whatsapp.net',
+      t: '2792725867'
     },
     content: [ [Object], [Object] ]
   },
   key: {
-    remoteJid: '120111111111111111@g.us',
-    id: 'AC62067AG6D12C8741E9E0C2CE21F367',
+    remoteJid: '434311111111111111@lid',
+    id: 'AC75D8A10E220E8692FC161EBB5FD34A',
     fromMe: false,
-    isGroup: true,
+    isGroup: false,
     isBroadcast: false,
     isNewsletter: false,
-    participantAlt: '6281111111111@s.whatsapp.net',
-    senderDevice: 0,
-    participant: '43411111111111@lid'
+    remoteJidAlt: '6287711111111@s.whatsapp.net',
+    senderDevice: 0
   },
   stanzaType: 'text',
   offline: false,
-  timestampSeconds: 1890322359,
-  expirationSeconds: 604800,
+  timestampSeconds: 2792725867,
+  expirationSeconds: 86400,
   pushName: '‮‮',
   message: e {
     extendedTextMessage: e {
@@ -179,22 +181,23 @@ The following example shows the serialized message payload.
     },
     messageContextInfo: e {
       threadId: [],
-      messageSecret: [Uint8Array],
-      limitSharingV2: [e]
+      deviceListMetadata: [e],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
     }
   },
-  id: 'AC62067AG6D12C8741E9E0C2CE21F367',
-  chat: '120111111111111111@g.us',
-  sender: '6281111111111@s.whatsapp.net',
-  senderLid: '43411111111111@lid',
+  id: 'AC75D8A10E220E8692FC161EBB5FD34A',
+  chat: '6287711111111@s.whatsapp.net',
+  sender: '6287711111111@s.whatsapp.net',
+  senderLid: '434311111111111111@lid',
   device: 'android',
   fromMe: false,
-  isGroup: true,
-  isPrivate: false,
+  isGroup: false,
+  isPrivate: true,
   isBroadcast: false,
   isNewsletter: false,
   isMedia: false,
-  type: 'extendedTextMessage',
+  msgType: 'extendedTextMessage',
   msg: e {
     endCardTiles: [],
     text: '@itsliaaa/starforge',
@@ -203,40 +206,66 @@ The following example shows the serialized message payload.
       mentionedJid: [],
       groupMentions: [],
       statusAttributions: [],
-      stanzaId: 'ACC4C76F644FF8ECD0193D87E2380367',
-      participant: '43411111111111@lid',
+      stanzaId: 'ACF49F7488D66F81B72BD31FDB4A7ADD',
+      participant: '434311111111111111@lid',
       quotedMessage: [e],
-      expiration: 604800,
+      expiration: 86400,
+      ephemeralSettingTimestamp: [n],
       disappearingMode: [e],
       quotedType: 0
     },
     inviteLinkGroupTypeV2: 0
   },
-  quoted: {
-    text: '@itsliaaa/starforge',
-    id: 'ACC4C76F644FF8ECD0193D87E2380367',
-    chat: '120111111111111111@g.us',
-    sender: '6281111111111@s.whatsapp.net',
-    senderLid: '43411111111111@lid',
+  quoted: e {
+    interactiveAnnotations: [],
+    scanLengths: [],
+    annotations: [],
+    url: 'https://mmg.whatsapp.net/v/t62.7118-24/...',
+    mimetype: 'image/jpeg',
+    fileSha256: Uint8Array(32) [ 156, 238, ... ],
+    fileLength: n { low: 357606, high: 0, unsigned: true },
+    height: 1458,
+    width: 1220,
+    mediaKey: Uint8Array(32) [ 249, 219, ... ],
+    fileEncSha256: Uint8Array(32) [ 19, 147, ... ],
+    directPath: '/v/t62.7118-24/...',
+    mediaKeyTimestamp: n { low: 2792725790, high: 0, unsigned: false },
+    jpegThumbnail: Uint8Array(619) [ 255, 216, ... ],
+    contextInfo: e {
+      mentionedJid: [],
+      groupMentions: [],
+      statusAttributions: [Array],
+      pairedMediaType: 0,
+      statusSourceType: 0,
+      statusAudienceMetadata: [e],
+      mediaDomainInfo: [e]
+    },
+    id: 'ACF49F7488D66F81B72BD31FDB4A7ADD',
+    chat: '6287711111111@s.whatsapp.net',
+    sender: '6287711111111@s.whatsapp.net',
+    senderLid: '434311111111111111@lid',
     device: 'android',
     fromMe: false,
-    isGroup: true,
-    isPrivate: false,
+    isGroup: false,
+    isPrivate: true,
     isBroadcast: false,
     isNewsletter: false,
-    isMedia: false,
-    type: 'conversation',
-    expiration: 604800,
+    isMedia: true,
+    msgType: 'imageMessage',
+    text: '',
+    expiration: 86400,
     mentionedJid: [],
     fakeObj: { key: [Object], message: [Object] },
     reply: [AsyncFunction: replyMessage],
     react: [AsyncFunction: reactMessage],
-    getProfilePicture: [AsyncFunction: getProfilePicture]
+    getProfilePicture: [AsyncFunction: getProfilePicture],
+    download: [AsyncFunction: downloadBytes],
+    downloadFile: [AsyncFunction: downloadFile]
   },
-  expiration: 604800,
+  expiration: 86400,
   mentionedJid: [],
   text: '@itsliaaa/starforge',
-  reply: [AsyncFunction: replyMessage],
+  reply: [AsyncFunction (anonymous)],
   react: [AsyncFunction: reactMessage],
   getProfilePicture: [AsyncFunction: getProfilePicture]
 }
@@ -613,7 +642,7 @@ client.sendInteractive(jid, EXAMPLE_BUTTONS, m, {
   optionTitle: '🧩 Wrapped Buttons',
 
   // Limited time offer
-  offerText: '?? Limited Time Offer',
+  offerText: '🔖 Limited Time Offer',
   offerCode: '@itsliaaa/starforge',
   offerUrl: 'https://www.npmjs.com/package/@itsliaaa/starforge',
   offerExpiration: Date.now() + 86_400_000
@@ -747,6 +776,7 @@ client.sendLegacyButton(jid, EXAMPLE_BUTTONS, m, {
 `sendLegacyList(jid: string, rawSections: object[], quote?: object, extraContent?: object, options?: object)`
 
 ```javascript
+// Regular list message
 client.sendLegacyList(jid, [{
   title: '🚀 Menu 1',
   rows: [{
@@ -762,6 +792,33 @@ client.sendLegacyList(jid, [{
     id: '#Search'
   }]
 }], m, {
+  text: '📋 List!',
+  footer: '@itsliaaa/starforge',
+  buttonText: '📋 Select',
+  title: '👋🏻 Hello'
+})
+
+// Product list message
+client.sendLegacyList(jid, [{
+  title: '🚀 Menu 1',
+  products: [{
+    productId: '607964531532'
+  }, {
+    productId: '506965808593'
+  }]
+}, {
+  title: '🌱 Menu 2',
+  products: [{
+    productId: '676909529293'
+  }, {
+    productId: '656988410262'
+  }]
+}], m, {
+  header: {
+    productId: '656988410262',
+    thumbnail: /* Buffer | ArrayBufferLike */,
+    businessOwnerJid: '434311111111111111@lid'
+  },
   text: '📋 List!',
   footer: '@itsliaaa/starforge',
   buttonText: '📋 Select',
@@ -1076,11 +1133,11 @@ FFMPEG_PATH=ffmpeg
 
 FFPROBE_PATH=ffprobe
 
-FFMPEG_TIMEOUT=30000
+FFMPEG_TIMEOUT=60000
 
-FFPROBE_TIMEOUT=15000
+FFPROBE_TIMEOUT=60000
 
-FETCH_TIMEOUT=30000
+FETCH_TIMEOUT=60000
 ```
 
 ### ❤️ Credits

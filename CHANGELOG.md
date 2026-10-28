@@ -1,10 +1,19 @@
 # Changelog
 
+## 0.0.0-alpha.11 - 2026-09-28
+
+- chore: increase default value of timeout to 60 seconds.
+- chore: use `SIGTERM` instead of `SIGKILL` to terminate FFmpeg and FFprobe processes on timeout.
+- chore: rename `.type` to `.msgType` in the message serializer.
+- feat: add `.downloadFile()` for serialized message.
+- feat: add `messageIdPrefix` and `simulatePresence` options to `extendSocket()` configuration.
+- chore: add product list message example to [README.md](README.md).
+
 ## 0.0.0-alpha.10 - 2026-09-15
 
 - fix: prevent circular references from `quoted.fakeObj` in the serializer.
 - feat: support sending statuses through all functions returned by `extendSocket()`.
-- feat: add `hasBotIndicator()` to detect incoming messages
+- feat: add `hasBotIndicator()` to detect incoming messages.
 
 ## 0.0.0-alpha.9 - 2026-09-09
 
