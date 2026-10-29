@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.0-alpha.12 - 2026-09-29
+
+- fix: prevent serialization errors caused by empty `quotedMessage` values.
+- fix: resolve MIME type detection failures in `Request.gemini()` when processing files.
+- fix: improve `sendAlbum()` compatibility with zapo-js v1.11.0+.
+
 ## 0.0.0-alpha.11 - 2026-09-28
 
 - chore: increase default value of timeout to 60 seconds.
