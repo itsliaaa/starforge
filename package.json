@@ -1,6 +1,6 @@
 {
    "name": "@itsliaaa/starforge",
-   "version": "0.0.0-alpha.12",
+   "version": "0.0.0-alpha.13",
    "description": "A toolkit for building WhatsApp bots with Zapo.",
    "main": "./lib/index.js",
    "exports": {
@@ -40,7 +40,8 @@
       "semaphore",
       "queue",
       "levenshtein",
-      "webp"
+      "webp",
+      "file-type"
    ],
    "homepage": "https://github.com/itsliaaa/starforge#readme",
    "author": "Lia Wynn",

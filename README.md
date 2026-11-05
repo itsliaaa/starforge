@@ -77,11 +77,11 @@ This project is a toolkit for building WhatsApp bots with Zapo and will be used 
 This library follows a user-controlled dependency model. Additional dependencies are not required unless you use the features that rely on them. Install only the dependencies you need.
 
 ```bash
-npm install @itsliaaa/starforge magic-bytes.js qr sharp zapo-js
+npm install @itsliaaa/starforge qr sharp zapo-js
 ```
 
 - `qr` is required by `encodeQR()`.
-- `magic-bytes.js` is used by `detectFileType()`. Alternatively, you can install `file-type`.
+- `detectFileType()` prioritizes `magic-bytes.js`, with `file-type` as an alternative. If neither is available, it falls back to built-in signature-based detection.
 - `sharp` is used for image processing tasks such as generating thumbnails, creating favicons, `createMediaProcessor()`, and more. Alternatively, you can install `@napi-rs/image` or `jimp`. Only one image processing backend is needed.
 
 ### 🧩 Example

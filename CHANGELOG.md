@@ -1,12 +1,16 @@
 # Changelog
 
-## 0.0.0-alpha.12 - 2026-09-29
+## 0.0.0-alpha.13 - 2026-11-05
+
+- feat: implement a custom file signature detector based on the [List of File Signatures](https://en.wikipedia.org/wiki/List_of_file_signatures), reducing reliance on external dependencies.
+
+## 0.0.0-alpha.12 - 2026-10-29
 
 - fix: prevent serialization errors caused by empty `quotedMessage` values.
 - fix: resolve MIME type detection failures in `Request.gemini()` when processing files.
 - fix: improve `sendAlbum()` compatibility with zapo-js v1.11.0+.
 
-## 0.0.0-alpha.11 - 2026-09-28
+## 0.0.0-alpha.11 - 2026-10-28
 
 - chore: increase default value of timeout to 60 seconds.
 - chore: use `SIGTERM` instead of `SIGKILL` to terminate FFmpeg and FFprobe processes on timeout.
@@ -15,19 +19,19 @@
 - feat: add `messageIdPrefix` and `simulatePresence` options to `extendSocket()` configuration.
 - chore: add product list message example to [README.md](README.md).
 
-## 0.0.0-alpha.10 - 2026-09-15
+## 0.0.0-alpha.10 - 2026-10-15
 
 - fix: prevent circular references from `quoted.fakeObj` in the serializer.
 - feat: support sending statuses through all functions returned by `extendSocket()`.
 - feat: add `hasBotIndicator()` to detect incoming messages.
 
-## 0.0.0-alpha.9 - 2026-09-09
+## 0.0.0-alpha.9 - 2026-10-09
 
 - fix: support `0` and `1` values for `premium` and `isAiSticker` metadata in `sendSticker()` and `sendStickerPack()`.
 - feat: support metadata rewriting for WhatsApp Lottie stickers in `sendSticker()` and `sendStickerPack()`.
 - feat: support custom thumbnails for `review_and_pay` buttons in `sendInteractive()`.
 
-## 0.0.0-alpha.8 - 2026-09-08
+## 0.0.0-alpha.8 - 2026-10-08
 
 - docs: add more `sendAdText()` example.
 - feat: add `spoiler` boolean option *(currently not all WhatsApp versions render it)*.
@@ -37,11 +41,11 @@
 - fix: prevent `resolveContextInfo()` errors.
 - refactor: improved the logical flow of `levenshtein()`.
 
-## 0.0.0-alpha.7 - 2026-09-06
+## 0.0.0-alpha.7 - 2026-10-06
 
 - fix: prevent `sendMedia()` from throwing errors frequently.
 
-## 0.0.0-alpha.6 - 2026-09-06
+## 0.0.0-alpha.6 - 2026-10-06
 
 - docs: add more `sendRich()` example.
 - fix: handle `htmlPayload` correctly in `sendRich()`.
@@ -50,7 +54,7 @@
 - fix: use temporary files for media inputs in several FFmpeg processes.
 - refactor: restructure the logical flow of `createSqliteDatabase()`.
 
-## 0.0.0-alpha.5 - 2026-09-04
+## 0.0.0-alpha.5 - 2026-10-04
 
 - docs: add `isAi` option example.
 - docs: add more `sendLegacyButton()` option example.
@@ -58,20 +62,20 @@
 - fix: `updateMemberLabel()` constructor invocation ([#1](https://github.com/itsliaaa/starforge/issues/1)).
 - feat: support `motionThumbnail` *(Photo Live)* in `sendMedia()` and `sendAlbum()`.
 
-## 0.0.0-alpha.4 - 2026-09-03
+## 0.0.0-alpha.4 - 2026-10-03
 
 - feat: add `sendCarousel()`.
 - feat: support `audioFooter` *(currently iOS only & not all WhatsApp versions render it)* in `sendInteractive()` and `sendCarousel()`.
 - feat: support `compactEntity[]` in `sendRich()` content.
 - fix: prevent serializer fallback value from being `undefined`.
 
-## 0.0.0-alpha.3 - 2026-09-02
+## 0.0.0-alpha.3 - 2026-10-02
 
 - refactor: adjusted `createSqliteDatabase()` logical flow.
 - fix: prevent `sendMedia()` from throwing when parameters are `null` or `undefined`.
 - feat: add `sendCopy()` for directly copying message content with forward metadata.
 
-## 0.0.0-alpha.2 - 2026-09-02
+## 0.0.0-alpha.2 - 2026-10-02
 
 - feat: add `readTimeout` to make messages disappear after being opened.
 - feat: add extra options to `sendText()` for sending status, including group status.
@@ -79,7 +83,7 @@
 - chore: improve `resolveUserJid()` to resolve user JIDs more accurately.
 - fix: prevent `send*()` functions from throwing when parameters are `null` or `undefined`.
 
-## 0.0.0-alpha.1 - 2026-09-01
+## 0.0.0-alpha.1 - 2026-10-01
 
 - feat: add `send*()` helpers wrapping Zapo's `message.send()`.
 - feat: add `rejectCall()`, `updateMemberLabel()`, and `setChatEphemeral()`.
