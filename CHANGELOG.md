@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.0.0-alpha.14 - 2026-11-16
+
+- feat: implement a qr encoder, reducing reliance on external dependencies.
+- fix: prevent product list cannot be sent using `sendLegacyList()`.
+
 ## 0.0.0-alpha.13 - 2026-11-05
 
 - feat: implement a custom file signature detector based on the [List of File Signatures](https://en.wikipedia.org/wiki/List_of_file_signatures), reducing reliance on external dependencies.
