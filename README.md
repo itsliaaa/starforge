@@ -113,7 +113,9 @@ extendSocket(client, {
 const serialize = createSerializer(client)
 
 client.on('auth_qr', async ({ qr }) => {
+  // No need to install any qr encoder dependencies!
   const { getRaw, getAscii, getPngBuffer } = encodeQR(qr)
+
   console.log('📷 Scan this QR', getAscii())
 })
 
@@ -1082,6 +1084,7 @@ client.sendCopy(jid, m, { quote: m })
 
 ```javascript
 // Add an "AI" icon (only available in private chats)
+// WhatsApp no longer renders this icon in some versions
 client.sendText(jid, '🤖 Hello', m, null, {
    isAi: true
 })

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.0 - 2026-11-20
+
+- fix: prevent `undefined` when resolving context info.
+- fix: add ephemeral resolver when sending `FutureProofMessage` for `send*()` functions.
+- feat: add `decodeHTMLEntities()`, `escapeHTML()`, and `isGroupStatus()` functions.
+- refactor: improved the logical flow of `createCache()`.
+
 ## 0.0.0-alpha.14 - 2026-11-16
 
 - feat: implement a qr encoder, reducing reliance on external dependencies.
