@@ -113,7 +113,7 @@ extendSocket(client, {
 const serialize = createSerializer(client)
 
 client.on('auth_qr', async ({ qr }) => {
-  // No need to install any qr encoder dependencies!
+  // QR encoding is built-in, no external dependencies needed
   const { getRaw, getAscii, getPngBuffer } = encodeQR(qr)
 
   console.log('📷 Scan this QR', getAscii())
@@ -312,13 +312,20 @@ client.sendText(m.chat, '🗄️ Secret Password: ||*4640*||', m)
 
 #### 😄 Reaction
 
-`sendReact(jid: string, rawEmoji: string, target?: object, options?: object)`
+`sendReact(jid: string, rawEmoji: Buffer | string | Readable, target?: object, extraContent?: object, options?: object)`
 
 ```javascript
 client.sendReact(jid, '🫪', m.key)
 
 // You can also react to a group status
 client.sendReact(jid, '🫪', m.key, { groupStatus: true })
+
+// Send a sticker reaction
+client.sendReact(jid, /* Buffer | string | Readable */, m.key, {
+  // Same payload as sendSticker()
+  name: '@itsliaaa/starforge',
+  publisher: 'Stellar'
+})
 ```
 
 #### 📰 Link Preview
@@ -425,6 +432,9 @@ client.sendSticker(jid, 'https://files.catbox.moe/jtofzb.jpeg', m, {
   // Add custom sticker metadata
   isAiSticker: true,
   premium: 0,
+
+  // Add audio for sticker (Available on zapo-js v1.12.1+)
+  audio: /* Buffer | string | Readable */,
 
   // Modify EXIF without external WebP dependencies
   name: '@itsliaaa/starforge',

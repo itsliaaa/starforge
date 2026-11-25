@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.0 - 2026-11-25
+
+- feat: add sticker reaction for `sendReact()`.
+- feat: add audio sticker for `sendSticker()`.
+- chore: increase animated sticker framerate from 15 to 24.
+
 ## 0.1.0 - 2026-11-20
 
 - fix: prevent `undefined` when resolving context info.
