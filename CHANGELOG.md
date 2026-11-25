@@ -1,10 +1,16 @@
 # Changelog
 
+## 0.2.1 - 2026-11-25
+
+- chore: increase sticker compression level.
+- revert: increase animated sticker framerate from 15 to 24.
+
 ## 0.2.0 - 2026-11-25
 
 - feat: add sticker reaction for `sendReact()`.
 - feat: add audio sticker for `sendSticker()`.
 - chore: increase animated sticker framerate from 15 to 24.
+- chore: increase audio quality when sending mp3 and ptt.
 
 ## 0.1.0 - 2026-11-20
 
