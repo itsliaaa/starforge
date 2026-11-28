@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.2 - 2026-11-28
+
+- perf: optimize sticker image and video conversion.
+- perf: improve WebP encoding efficiency.
+
 ## 0.2.1 - 2026-11-25
 
 - chore: increase sticker compression level.
